@@ -7,9 +7,10 @@ import (
 )
 
 type Config struct {
-	Logs LogConfig
-	DB   PostgresConfig
-	Port string
+	Logs   LogConfig
+	DB     PostgresConfig
+	Port   string
+	OAuth2 OAuth2Config
 }
 
 type LogConfig struct {
@@ -24,6 +25,11 @@ type PostgresConfig struct {
 	Port     string
 }
 
+type OAuth2Config struct {
+	ClientID     string
+	ClientSecret string
+}
+
 func LoadConfig() (*Config, error) {
 	cfg := &Config{
 		Port: os.Getenv("PORT"),
@@ -36,6 +42,10 @@ func LoadConfig() (*Config, error) {
 			Password: os.Getenv("POSTGRES_PWD"),
 			URL:      os.Getenv("POSTGRES_URL"),
 			Port:     os.Getenv("POSTGRES_PORT"),
+		},
+		OAuth2: OAuth2Config{
+			ClientID:     os.Getenv("OAUTH2_CLIENT_ID"),
+			ClientSecret: os.Getenv("OAUTH2_CLIENT_SECRET"),
 		},
 	}
 
